@@ -1,0 +1,224 @@
+﻿@model FinalWebTODO.Models.TodoData
+@{
+    ViewBag.Title = "Creaza Todo";
+    Layout = "~/Views/_LayoutCreaza.cshtml";
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <script type="text/javascript">
+        alert('@TempData["SuccessMessage"]');
+    </script>
+}
+<!--partea de sus-->
+<section  class="w3l-about-breadcrumb">
+    <div style="height: 200px; vertical-align: top;" class="breadcrumb-bg breadcrumb-bg-about py-sm-5 pt-5 pb-4">
+        <div style="height: 200px; vertical-align: top;" class="container pt-lg-5 pt-md-3 py-lg-4 pb-md-3">
+            <h2 style="margin: 0; padding: 0" class="title">Crează un Todo</h2>
+            <div class="breadcrumbs-custom-path mt-2">
+                <a style="color: rgb(212, 34, 94)" href="@Url.Action("Login", "Home")">Acasă\Împreună ♡</a>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/partea de sus-->
+<!--Creare todo-->
+
+<div class="todo">
+    <div class="todo-task">
+        <p style="font-size: 35px; margin: 20px 10px 25px 10px; color: rgb(212, 34, 94); font-weight: bold;">Sarcina</p>
+        <div style="margin: 0 50px 0 50px">
+            @Html.ValidationSummary(true)
+            @using (Html.BeginForm("CreazaTodo", "Home", FormMethod.Post, new { @id = "TodoForm" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.TextBoxFor(m => m.Subiect, new
+                {
+                    placeHolder = "Subiect",
+                    name = "Subiect",
+                    id = "Subiect",
+                    @class = "todo-subiect"
+                })
+                @Html.ValidationMessageFor(m => m.Subiect)
+
+
+                @Html.TextBoxFor(m => m.Descriere, new
+                {
+                    placeHolder = "Descriere",
+                    name = "Descriere",
+                    id = "Descriere",
+                    @class = "todo-subiect2",
+                    style = "vertical-align: top; text-align: start; padding: 15px; box-sizing: border-box;"
+                })
+                @Html.ValidationMessageFor(m => m.Descriere)
+
+                <button class="btn btn-primary" type="submit">Submit</button>
+
+
+
+
+            <!--<input class="todo-subiect" type="text" placeholder="Subiectul" />
+
+    <textarea class="todo-subiect2" type="text" placeholder="Descrierea" style="margin-bottom: 20px;"></textarea>
+    -->
+
+                <div style="display:flex; margin: 10px">
+                    <p class="todo-tipul">Tipul:</p>
+                    @Html.TextBoxFor(m => m.Tipul, new
+               {
+                   placeHolder = "Tipul",
+                   name = "Tipul",
+                   id = "Tipul",
+                   @class = "todo-tipul2"
+               })
+                    @Html.ValidationMessageFor(m => m.Tipul)
+
+                </div>
+                <div style="display:flex; margin: 10px">
+                    <p class="todo-data">Data</p>
+                    <input class="todo-data2" type="date"
+                           name="begin"
+                           placeholder="zi-lu-anul"
+                           value=""
+                           min="now"
+                           max="future">
+                </div>
+                <div style="display: flex; margin: 10px">
+                    <p class="todo-lista">Selecteaza lista:</p>
+                    <select class="todo-lista2">
+                        <option></option>
+
+
+                    </select>
+                
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="todo-subtask" style="margin-top: 25px">
+        <p style="display: inline; font-size: 35px; margin: 20px 10px 10px 10px; color: rgb(212, 34, 94); font-weight: bold;">Sub-Sarcina</p>
+        <img id="addTaskButton" class="todo-plus" src="~/assets/images/plusbaby.jpg.jpeg" />
+        <div id="taskContainer"></div>
+    </div>
+    <div style="text-align: end;">
+    </div>
+</div>
+
+<!--/Creare todo-->
+@section Scripts{
+    <script type="text/javascript">
+        $(function () {
+            $("#TodoForm").validate({
+                rules: {
+                    Subiect: {
+                        required: true
+                    },
+                    Descriere: {
+                        required: true
+                    }
+                },
+                submitHandler: function (form) {
+                    form.submit();
+                },
+                errorPlacement: function (error, element) {
+                    $(element)
+                        .closest("form")
+                        .find("label[for='" + element.attr("id") + "']")
+                        .append(error);
+                },
+                errorElement: "span"
+            });
+        });
+
+
+        var taskCount = 0;
+
+        document.getElementById("addTaskButton").addEventListener("click", function () {
+            taskCount++;
+
+            var taskDiv = document.createElement("div");
+            taskDiv.classList.add("todo-task");
+
+            taskDiv.innerHTML = `
+                        <div style="display:flex;">
+                            <p style="font-size: 20px; margin: 10px 10px 10px 10px; color: rgb(212, 34, 94); font-weight: bold; display: inline;">- ${taskCount} -</p>
+                            <button class="deleteTaskButton" style="border:none; border-radius: 25px; font-size: 20px; margin: 10px 0 10px 0px; color: white; background-color: rgb(212, 34, 94); font-weight: bold; display: inline;;">Sterge</button>
+                        </div>
+                        <div id="myDIV" class="todo-sidetask">
+                          <input class="subtask-input" type="text" id="myInput" placeholder="Sarcina...">
+                          <button onclick="newElement()" class="subtask-span">Adaugare</button>
+                        </div>
+                        <ul class="subtask-ul" id="myUL"></ul>
+                    `;
+
+            // Adaugă task-ul în container
+            document.getElementById("taskContainer").appendChild(taskDiv);
+        });
+
+        // Adaugă eveniment de ștergere pentru fiecare buton de ștergere
+        document.getElementById("taskContainer").addEventListener("click", function (event) {
+            if (event.target.classList.contains("deleteTaskButton")) {
+                event.target.closest('.todo-task').remove();
+                taskCount--;
+            }
+        });
+
+        var myNodelist = document.getElementsByTagName("ul");
+        var i;
+        for (i = 0; i < myNodelist.length; i++) {
+            var span = document.createElement("SPAN");
+            var txt = document.createTextNode("\u00D7");
+            span.className = "close";
+            span.appendChild(txt);
+            myNodelist[i].appendChild(span);
+        }
+
+        // sterge
+        var close = document.getElementsByClassName("close");
+        var i;
+        for (i = 0; i < close.length; i++) {
+            close[i].onclick = function () {
+                var div = this.parentElement;
+                div.style.display = "none";
+            }
+        }
+
+        // pezdatai check
+        var list = document.querySelector('ul');
+        list.addEventListener('click', function (ev) {
+            if (ev.target.tagName === 'Li') {
+                ev.target.classList.toggle('checked');
+            }
+        }, false);
+
+        // item nou in lista
+        function newElement() {
+            var li = document.createElement("ul");
+            var inputValue = document.getElementById("myInput").value;
+            var t = document.createTextNode(inputValue);
+            li.appendChild(t);
+            if (inputValue === '') {
+                alert("Trebuie scris ceva!");
+            } else {
+                document.getElementById("myUL").appendChild(li);
+            }
+            document.getElementById("myInput").value = "";
+
+            var span = document.createElement("SPAN");
+            var txt = document.createTextNode("\u00D7");
+            span.className = "close";
+            span.appendChild(txt);
+            li.appendChild(span);
+
+            for (i = 0; i < close.length; i++) {
+                close[i].onclick = function () {
+                    var div = this.parentElement;
+                    div.style.display = "none";
+                }
+            }
+        }
+
+    </script>
+
+}

@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <title>TODO Login</title>
+
+    <!-- Meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Google fonts -->
+    <link href="//fonts2.googleapis.com/css2?family=Kumbh+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+
+    @if (IsSectionDefined("Styles"))
+            {
+                @RenderSection("Styles", required: false)
+            }
+
+    @using System.Web.Optimization
+    @Styles.Render("~/assets/css2")
+</head>
+<body>
+
+    <div>
+        @RenderBody()
+    </div>
+
+    @Html.Partial("_Login")
+
+    @Scripts.Render("~/assets/js2")
+
+    <script src="js/fontawesome.js"></script>
+
+    @RenderSection("Scripts", required: false)
+                                                   
+</body>
+</html>

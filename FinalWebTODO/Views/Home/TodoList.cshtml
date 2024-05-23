@@ -1,0 +1,45 @@
+﻿@model FinalWebTODO.Models.CombinedModels
+@{
+    ViewBag.Title = "TodoList";
+}
+
+@foreach (var todo in Model.TodoList)
+{
+    <div style="text-align: center; border: 1px solid black; border-radius: 5px;margin-bottom: 20px; box-shadow: 0 0 10px 10px #8888;">
+        <div>
+            <label for="subiect">Subiect:</label>
+            <p style="padding-left: 20px" id="subiect" name="subiect">@todo.Subiect</p>
+        </div>
+        <div>
+            <label for="descriere">Descriere</label>
+            <p style="padding-left: 20px" id="descriere" name="descriere">@todo.Descriere</p>
+        </div>
+    </div>
+    @using (Html.BeginForm("Edit", "Home", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div>
+            <label for="subiect">Subiect:</label>
+            @Html.TextBoxFor(m => m.TodoData.Subiect, new
+            {
+                type = "text",
+                id = "subiect",
+                name = "subiect",
+                placeHolder = "Modifica subiect",
+                style = "padding-left: 20px; width: 80%"
+            })
+        </div>
+        <div>
+            <label for="descriere">Descriere:</label>
+            @Html.TextBoxFor(m => m.TodoData.Descriere, new
+            {
+                type = "text",
+                id = "descriere",
+                name = "descriere",
+                placeHolder = "Modifica descriere",
+                style = "padding-left: 20px; width: 80%"
+            })
+        </div>
+        <button type="submit">Submit</button>
+    }
+}

@@ -1,0 +1,133 @@
+﻿@{ 
+    var succesMessage = TempData["SuccesMessage"];
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Todo list</title>
+
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function () {
+            var succesMessage = "@succesMessage";
+            if (succesMessage) {
+                alert(succesMessage);
+            }
+        }); 
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+
+
+
+    @if (IsSectionDefined("Styles"))
+    {
+        @RenderSection("Styles", required: false)
+    }
+    <!--
+
+
+        -->
+
+    @using System.Web.Optimization
+    @Styles.Render("~/assets/css")
+</head>
+<body>
+    @Html.Partial("_Header")
+
+
+    <div>
+        @RenderBody()
+    </div>
+
+    @Html.Partial("_Footer")
+
+    @Scripts.Render("~/assets/js")
+
+    @RenderSection("Scripts", required: false)
+
+    <!-- script for tesimonials carousel slider -->
+    <script>
+    $(document).ready(function () {
+            $("#owl-demo1").owlCarousel({
+                loop: true,
+                nav: false,
+                margin: 50,
+                responsiveClass: true,
+                responsive: {
+                    0: {
+                        items: 1,
+                        nav: false
+                    },
+                    992: {
+                        items: 2,
+                        nav: false
+                    }
+                }
+            })
+        })</script>
+    <!-- //script for tesimonials carousel slider -->
+    <!-- faq -->
+    <script>
+    const items = document.querySelectorAll(".accordion button");
+
+        function toggleAccordion() {
+            const itemToggle = this.getAttribute('aria-expanded');
+
+            for (i = 0; i < items.length; i++) {
+                items[i].setAttribute('aria-expanded', 'false');
+            }
+
+            if (itemToggle == 'false') {
+                this.setAttribute('aria-expanded', 'true');
+            }
+        }
+
+        items.forEach(item => item.addEventListener('click', toggleAccordion));</script>
+    <!-- //faq -->
+    <!--/MENU-JS-->
+    <script>
+    $(window).on("scroll", function () {
+            var scroll = $(window).scrollTop();
+
+            if (scroll >= 80) {
+                $("#site-header").addClass("nav-fixed");
+            } else {
+                $("#site-header").removeClass("nav-fixed");
+            }
+        });
+
+        //Main navigation Active Class Add Remove
+        $(".navbar-toggler").on("click", function () {
+            $("header").toggleClass("active");
+        });
+        $(document).on("ready", function () {
+            if ($(window).width() > 991) {
+                $("header").removeClass("active");
+            }
+            $(window).on("resize", function () {
+                if ($(window).width() > 991) {
+                    $("header").removeClass("active");
+                }
+            });
+        });</script>
+    <!--//MENU-JS-->
+    <!-- disable body scroll which navbar is in active -->
+    <script>
+    $(function () {
+            $('.navbar-toggler').click(function () {
+                $('body').toggleClass('noscroll');
+            })
+        });</script>
+    <!-- //disable body scroll which navbar is in active -->
+    <!--bootstrap-->
+    <script src="~/assets/js/bootstrap.min.js"></script>
+    <!-- //bootstrap-->
+
+</body>
+</html>

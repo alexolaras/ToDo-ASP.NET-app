@@ -1,0 +1,615 @@
+#region Assembly System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a
+// location unknown
+// Decompiled with ICSharpCode.Decompiler 8.1.1.7464
+#endregion
+
+using System.Collections.Specialized;
+using System.Text;
+using System.Web.Configuration;
+using System.Web.Util;
+
+namespace System.Web;
+
+//
+// Summary:
+//     Provides a type-safe way to create and manipulate individual HTTP cookies.
+public sealed class HttpCookie
+{
+    private string _name;
+
+    private string _path = "/";
+
+    private bool _secure;
+
+    private bool _httpOnly;
+
+    private string _domain;
+
+    private bool _expirationSet;
+
+    private DateTime _expires;
+
+    private string _stringValue;
+
+    private HttpValueCollection _multiValue;
+
+    private bool _changed;
+
+    private bool _added;
+
+    private SameSiteMode _sameSite;
+
+    internal bool Changed
+    {
+        get
+        {
+            return _changed;
+        }
+        set
+        {
+            _changed = value;
+        }
+    }
+
+    internal bool Added
+    {
+        get
+        {
+            return _added;
+        }
+        set
+        {
+            _added = value;
+        }
+    }
+
+    internal bool IsInResponseHeader { get; set; }
+
+    //
+    // Summary:
+    //     Gets or sets the name of a cookie.
+    //
+    // Returns:
+    //     The default value is a null reference (Nothing in Visual Basic) unless the constructor
+    //     specifies otherwise.
+    public string Name
+    {
+        get
+        {
+            return _name;
+        }
+        set
+        {
+            _name = value;
+            _changed = true;
+        }
+    }
+
+    //
+    // Summary:
+    //     Gets or sets the virtual path to transmit with the current cookie.
+    //
+    // Returns:
+    //     The virtual path to transmit with the cookie. The default is /, which is the
+    //     server root.
+    public string Path
+    {
+        get
+        {
+            return _path;
+        }
+        set
+        {
+            _path = value;
+            _changed = true;
+        }
+    }
+
+    //
+    // Summary:
+    //     Gets or sets a value indicating whether to transmit the cookie using Secure Sockets
+    //     Layer (SSL)--that is, over HTTPS only.
+    //
+    // Returns:
+    //     true to transmit the cookie over an SSL connection (HTTPS); otherwise, false.
+    //     The default value is false.
+    public bool Secure
+    {
+        get
+        {
+            return _secure;
+        }
+        set
+        {
+            _secure = value;
+            _changed = true;
+        }
+    }
+
+    //
+    // Summary:
+    //     Determines whether the cookie is allowed to participate in output caching.
+    //
+    // Returns:
+    //     true to specify that output caching will not be suppressed for a give System.Web.HttpResponse
+    //     containing one or more outbound cookies; otherwise, false.
+    public bool Shareable { get; set; }
+
+    //
+    // Summary:
+    //     Gets or sets a value that specifies whether a cookie is accessible by client-side
+    //     script.
+    //
+    // Returns:
+    //     true if the cookie has the HttpOnly attribute and cannot be accessed through
+    //     a client-side script; otherwise, false. The default is false.
+    public bool HttpOnly
+    {
+        get
+        {
+            return _httpOnly;
+        }
+        set
+        {
+            _httpOnly = value;
+            _changed = true;
+        }
+    }
+
+    //
+    // Summary:
+    //     Gets or sets the domain to associate the cookie with.
+    //
+    // Returns:
+    //     The name of the domain to associate the cookie with. The default value is the
+    //     current domain.
+    public string Domain
+    {
+        get
+        {
+            return _domain;
+        }
+        set
+        {
+            _domain = value;
+            _changed = true;
+        }
+    }
+
+    //
+    // Summary:
+    //     Gets or sets the expiration date and time for the cookie.
+    //
+    // Returns:
+    //     The time of day (on the client) at which the cookie expires.
+    public DateTime Expires
+    {
+        get
+        {
+            if (!_expirationSet)
+            {
+                return DateTime.MinValue;
+            }
+
+            return _expires;
+        }
+        set
+        {
+            _expires = value;
+            _expirationSet = true;
+            _changed = true;
+        }
+    }
+
+    //
+    // Summary:
+    //     Gets or sets an individual cookie value.
+    //
+    // Returns:
+    //     The value of the cookie. The default value is a null reference (Nothing in Visual
+    //     Basic).
+    public string Value
+    {
+        get
+        {
+            if (_multiValue != null)
+            {
+                return _multiValue.ToString(urlencoded: false);
+            }
+
+            return _stringValue;
+        }
+        set
+        {
+            if (_multiValue != null)
+            {
+                _multiValue.Reset();
+                _multiValue.Add(null, value);
+            }
+            else
+            {
+                _stringValue = value;
+            }
+
+            _changed = true;
+        }
+    }
+
+    //
+    // Summary:
+    //     Gets or sets the value for the SameSite attribute of the cookie.
+    //
+    // Returns:
+    //     One of the enumeration values that represents the enforcement mode of the cookie.
+    //     If the application targets the .NET Framework 4.7.2 or later versions, the default
+    //     value is System.Web.SameSiteMode.Lax; otherwise, the default value is System.Web.SameSiteMode.None.
+    public SameSiteMode SameSite
+    {
+        get
+        {
+            return _sameSite;
+        }
+        set
+        {
+            _sameSite = value;
+            _changed = true;
+        }
+    }
+
+    //
+    // Summary:
+    //     Gets a value indicating whether a cookie has subkeys.
+    //
+    // Returns:
+    //     true if the cookie has subkeys, otherwise, false. The default value is false.
+    public bool HasKeys => Values.HasKeys();
+
+    //
+    // Summary:
+    //     Gets a collection of key/value pairs that are contained within a single cookie
+    //     object.
+    //
+    // Returns:
+    //     A collection of cookie values.
+    public NameValueCollection Values
+    {
+        get
+        {
+            if (_multiValue == null)
+            {
+                _multiValue = new HttpValueCollection();
+                if (_stringValue != null)
+                {
+                    if (_stringValue.IndexOf('&') >= 0 || _stringValue.IndexOf('=') >= 0)
+                    {
+                        _multiValue.FillFromString(_stringValue);
+                    }
+                    else
+                    {
+                        _multiValue.Add(null, _stringValue);
+                    }
+
+                    _stringValue = null;
+                }
+            }
+
+            _changed = true;
+            return _multiValue;
+        }
+    }
+
+    //
+    // Summary:
+    //     Gets a shortcut to the System.Web.HttpCookie.Values property. This property is
+    //     provided for compatibility with previous versions of Active Server Pages (ASP).
+    //
+    //
+    // Parameters:
+    //   key:
+    //     The key (index) of the cookie value.
+    //
+    // Returns:
+    //     The cookie value.
+    public string this[string key]
+    {
+        get
+        {
+            return Values[key];
+        }
+        set
+        {
+            Values[key] = value;
+            _changed = true;
+        }
+    }
+
+    internal HttpCookie()
+    {
+        _changed = true;
+    }
+
+    //
+    // Summary:
+    //     Creates and names a new cookie.
+    //
+    // Parameters:
+    //   name:
+    //     The name of the new cookie.
+    public HttpCookie(string name)
+    {
+        _name = name;
+        SetDefaultsFromConfig();
+        _changed = true;
+    }
+
+    //
+    // Summary:
+    //     Creates, names, and assigns a value to a new cookie.
+    //
+    // Parameters:
+    //   name:
+    //     The name of the new cookie.
+    //
+    //   value:
+    //     The value of the new cookie.
+    public HttpCookie(string name, string value)
+    {
+        _name = name;
+        _stringValue = value;
+        SetDefaultsFromConfig();
+        _changed = true;
+    }
+
+    internal void SetDefaultsFromConfig()
+    {
+        HttpCookiesSection httpCookiesSection = ((HttpContext.Current != null) ? RuntimeConfig.GetLKGConfig(HttpContext.Current).HttpCookies : RuntimeConfig.GetAppLKGConfig().HttpCookies);
+        _secure = httpCookiesSection.RequireSSL;
+        _httpOnly = httpCookiesSection.HttpOnlyCookies;
+        _sameSite = httpCookiesSection.SameSite;
+        if (httpCookiesSection.Domain != null && httpCookiesSection.Domain.Length > 0)
+        {
+            _domain = httpCookiesSection.Domain;
+        }
+    }
+
+    private bool SupportsHttpOnly(HttpContext context)
+    {
+        if (context != null && context.Request != null)
+        {
+            HttpBrowserCapabilities browser = context.Request.Browser;
+            if (browser != null)
+            {
+                if (!(browser.Type != "IE5"))
+                {
+                    return browser.Platform != "MacPPC";
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+
+        return false;
+    }
+
+    //
+    // Summary:
+    //     Converts the specified string representation of a cookie into its System.Web.HttpCookie
+    //     equivalent and returns a value that indicates whether the conversion succeeded.
+    //
+    //
+    // Parameters:
+    //   input:
+    //     The string representation of a cookie.
+    //
+    //   result:
+    //     If the conversion succeeded, contains the System.Web.HttpCookie value equivalent
+    //     to the cookie contained in input. If the conversion failed, result is null. The
+    //     conversion fails if the input parameter is null or empty or if a cookie name
+    //     can't be determined from input. This parameter's value is overwritten by the
+    //     method; the parameter is passed by reference and set to null as soon as the method
+    //     is entered.
+    //
+    // Returns:
+    //     true if input was converted successfully; otherwise, false.
+    public static bool TryParse(string input, out HttpCookie result)
+    {
+        result = null;
+        if (string.IsNullOrEmpty(input))
+        {
+            return false;
+        }
+
+        int num = input.IndexOf(';');
+        string text = ((num >= 0) ? input.Substring(0, num) : input);
+        HttpCookie httpCookie = HttpRequest.CreateCookieFromString(text.Trim(), useConfiguredDefaults: false);
+        if (string.IsNullOrEmpty(httpCookie.Name))
+        {
+            return false;
+        }
+
+        TryParseFlags(input, num, httpCookie);
+        result = httpCookie;
+        return true;
+    }
+
+    internal static void TryParseFlags(string input, int dividerIndex, HttpCookie cookie)
+    {
+        while (dividerIndex >= 0 && dividerIndex < input.Length - 1)
+        {
+            int num = dividerIndex + 1;
+            dividerIndex = input.IndexOf(';', num);
+            string text = ((dividerIndex >= 0) ? input.Substring(num, dividerIndex - num).Trim() : input.Substring(num).Trim());
+            int num2 = text.IndexOf('=');
+            string s = ((num2 >= 0) ? text.Substring(0, num2).Trim() : text);
+            string text2 = ((num2 >= 0 && num2 < text.Length - 1) ? text.Substring(num2 + 1).Trim() : null);
+            if (StringUtil.EqualsIgnoreCase(s, "Expires"))
+            {
+                if (DateTime.TryParse(text2, out var result))
+                {
+                    cookie.Expires = result;
+                }
+            }
+            else if (text2 != null && StringUtil.EqualsIgnoreCase(s, "Domain"))
+            {
+                cookie.Domain = text2;
+            }
+            else if (text2 != null && StringUtil.EqualsIgnoreCase(s, "Path"))
+            {
+                cookie.Path = text2;
+            }
+            else if (StringUtil.EqualsIgnoreCase(s, "Secure"))
+            {
+                cookie.Secure = true;
+            }
+            else if (StringUtil.EqualsIgnoreCase(s, "HttpOnly"))
+            {
+                cookie.HttpOnly = true;
+            }
+            else if (StringUtil.EqualsIgnoreCase(s, "SameSite"))
+            {
+                SameSiteMode result2 = (SameSiteMode)(-1);
+                if (Enum.TryParse<SameSiteMode>(text2, ignoreCase: true, out result2))
+                {
+                    cookie.SameSite = result2;
+                }
+            }
+        }
+    }
+
+    internal HttpResponseHeader GetSetCookieHeader(HttpContext context)
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        if (!string.IsNullOrEmpty(_name))
+        {
+            stringBuilder.Append(_name);
+            stringBuilder.Append('=');
+        }
+
+        if (_multiValue != null)
+        {
+            stringBuilder.Append(_multiValue.ToString(urlencoded: false));
+        }
+        else if (_stringValue != null)
+        {
+            stringBuilder.Append(_stringValue);
+        }
+
+        if (!string.IsNullOrEmpty(_domain))
+        {
+            stringBuilder.Append("; domain=");
+            stringBuilder.Append(_domain);
+        }
+
+        if (_expirationSet && _expires != DateTime.MinValue)
+        {
+            stringBuilder.Append("; expires=");
+            stringBuilder.Append(HttpUtility.FormatHttpCookieDateTime(_expires));
+        }
+
+        if (!string.IsNullOrEmpty(_path))
+        {
+            stringBuilder.Append("; path=");
+            stringBuilder.Append(_path);
+        }
+
+        if (_secure)
+        {
+            stringBuilder.Append("; secure");
+        }
+
+        if (_httpOnly && SupportsHttpOnly(context))
+        {
+            stringBuilder.Append("; HttpOnly");
+        }
+
+        if ((int)_sameSite > ((!AppSettings.SuppressSameSiteNone) ? (-1) : 0))
+        {
+            stringBuilder.Append("; SameSite=");
+            stringBuilder.Append(_sameSite);
+        }
+
+        return new HttpResponseHeader(27, stringBuilder.ToString());
+    }
+}
+#if false // Decompilation log
+'45' items in cache
+------------------
+Resolve: 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'
+Found single assembly: 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'
+Load from: 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\mscorlib.dll'
+------------------
+Resolve: 'System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Found single assembly: 'System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Load from: 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Drawing.dll'
+------------------
+Resolve: 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'
+Found single assembly: 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'
+Load from: 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.dll'
+------------------
+Resolve: 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Found single assembly: 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Load from: 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Configuration.dll'
+------------------
+Resolve: 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'
+Found single assembly: 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'
+Load from: 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Core.dll'
+------------------
+Resolve: 'System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'
+Found single assembly: 'System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'
+Load from: 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Data.dll'
+------------------
+Resolve: 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'
+Found single assembly: 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'
+Load from: 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Xml.dll'
+------------------
+Resolve: 'System.DirectoryServices, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Could not find by name: 'System.DirectoryServices, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+------------------
+Resolve: 'System.EnterpriseServices, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Found single assembly: 'System.EnterpriseServices, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Load from: 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.EnterpriseServices.dll'
+------------------
+Resolve: 'System.Web.RegularExpressions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Could not find by name: 'System.Web.RegularExpressions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+------------------
+Resolve: 'System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Could not find by name: 'System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+------------------
+Resolve: 'System.Web.ApplicationServices, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35'
+Found single assembly: 'System.Web.ApplicationServices, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35'
+Load from: 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Web.ApplicationServices.dll'
+------------------
+Resolve: 'System.ComponentModel.DataAnnotations, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35'
+Found single assembly: 'System.ComponentModel.DataAnnotations, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35'
+Load from: 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.ComponentModel.DataAnnotations.dll'
+------------------
+Resolve: 'System.DirectoryServices.Protocols, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Could not find by name: 'System.DirectoryServices.Protocols, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+------------------
+Resolve: 'System.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Could not find by name: 'System.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+------------------
+Resolve: 'System.ServiceProcess, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Could not find by name: 'System.ServiceProcess, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+------------------
+Resolve: 'System.Web.Services, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Found single assembly: 'System.Web.Services, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Load from: 'C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\System.Web.Services.dll'
+------------------
+Resolve: 'Microsoft.Build.Utilities.v4.0, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Could not find by name: 'Microsoft.Build.Utilities.v4.0, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+------------------
+Resolve: 'System.Runtime.Caching, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Could not find by name: 'System.Runtime.Caching, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+------------------
+Resolve: 'Microsoft.Build.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Could not find by name: 'Microsoft.Build.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+------------------
+Resolve: 'Microsoft.Build.Tasks.v4.0, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Could not find by name: 'Microsoft.Build.Tasks.v4.0, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+------------------
+Resolve: 'System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'
+Could not find by name: 'System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'
+#endif

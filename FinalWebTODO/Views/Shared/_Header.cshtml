@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <!--header-->
+    <div style="width: 100%; height: 100px; padding: 0; margin: 0; display: block; position: relative; background-color: black"></div>
+    <header id="site-header" class="fixed-top" style="height: 100px; border: none; border-bottom: 2px solid black">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-dark stroke">
+                <h1>
+
+                    <a style="font-family: Arial;
+                     padding-right: 20px;
+                     margin-right: 0;
+                    " class="navbar-brand H1">
+                        ToDo Llist
+                    </a>
+
+
+                </h1>
+                <!-- if logo is image enable this
+    <a class="navbar-brand" href="#index.html">
+        <img src="image-path" alt="Your logo" title="Your logo" style="height:35px;" />
+    </a> -->
+                <button class="navbar-toggler  collapsed bg-gradient" type="button" data-toggle="collapse"
+                        data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon fa icon-expand fa-bars"></span>
+                    <span class="navbar-toggler-icon fa icon-close fa-times"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                    <div class="navbar-nav ml-auto mr-5" style="text-align: center;">
+                        <li class="nav-item" style="width: 100px;">
+                            <a  href="@Url.Action("Login","Home")">Pagina Principala</a>  
+                        </li>
+                        <li class="nav-item H1" style="width: 100px; padding-top: 10px;">
+                            <a href="@Url.Action("CreazaTodo","Home")">Creaza</a>
+                        </li>
+                        <li class="nav-item H1" style="width: 100px; padding-top: 10px;">
+                            <a href="@Url.Action("TodoList","Home")">Liste</a>
+                        </li>
+                        <!--<li class="nav-item H1" style="width: 100px; padding-top: 10px;">
+                            <a href="@Url.Action("Contact","Home")">Pe azi</a>
+                        </li>-->
+                        <li class="nav-item H1" style="width: 100px; padding-top: 10px;">
+                            <a href="@Url.Action("Login","Home")">Calendar</a>
+                        </li>
+                        <nav class="ml-lg-3">
+                            <div class="search-bar">
+                                <form action="#" method="GET" class="search">
+                                    <input style="border: 1px solid black" type="search" class="search__input" name="search"
+                                           placeholder="Cautare..">
+                                    <span class="fa fa-search search__icon"></span>
+                            </div>
+                        </nav>
+
+                        <li class="nav-item H1" style="padding-top: 10px; width: 100px; padding-left: 25px">
+                            <a href="@Url.Action("Index", "Login")">Login</a>
+                        </li>
+
+                        <li class="nav-item H1" style="padding-top: 10px; width: 100px; padding-left: 25px">
+                            <a href="@Url.Action("Register", "Register")">Register</a>
+                        </li>
+                    </div>
+                </div>
+                <!-- toggle switch for light and dark theme -->
+
+                <div class="mobile-position">
+                    <nav class="navigation">
+                        <div class="theme-switch-wrapper">
+                            <label class="theme-switch" for="checkbox">
+                                <input type="checkbox" id="checkbox">
+                                <div class="mode-container py-1">
+                                    <i class="gg-sun"></i>
+                                    <i class="gg-moon"></i>
+                                </div>
+                            </label>
+                        </div>
+                    </nav>
+                </div>
+                <!-- //toggle switch for light and dark theme -->
+            </nav>
+        </div>
+    </header>
+    <!--/header-->
+</body>
+</html>

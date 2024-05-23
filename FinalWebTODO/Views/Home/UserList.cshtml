@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "UserList";
+}
+
+@model List<FinalWebTODO.Domain.Entities.User.UDbTable>
+
+@foreach( var user in Model)
+            {
+    <div style="text-align: center; border: 1px solid black; border-radius: 5px;margin-bottom: 20px; box-shadow: 0 0 10px 10px #8888;">
+        <p style="padding-left: 20px">@user.Email</p>  
+        <p style="padding-left: 20px">@user.Password</p>
+    </div>
+            }
