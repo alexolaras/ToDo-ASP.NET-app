@@ -13,5 +13,9 @@ namespace FinalWebTODO.BusinessLogic
         {
             return new SessionBl();
         }
+        public ISessionAdmin GetAdminSessionBL()
+        {
+            return new AdminSessionBL();
+        }
     }
 }

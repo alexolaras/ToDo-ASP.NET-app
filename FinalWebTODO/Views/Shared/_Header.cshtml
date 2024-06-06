@@ -35,37 +35,51 @@
 
                 <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                     <div class="navbar-nav ml-auto mr-5" style="text-align: center;">
-                        <li class="nav-item" style="width: 100px;">
-                            <a  href="@Url.Action("Login","Home")">Pagina Principala</a>  
-                        </li>
-                        <li class="nav-item H1" style="width: 100px; padding-top: 10px;">
-                            <a href="@Url.Action("CreazaTodo","Home")">Creaza</a>
-                        </li>
-                        <li class="nav-item H1" style="width: 100px; padding-top: 10px;">
-                            <a href="@Url.Action("TodoList","Home")">Liste</a>
-                        </li>
-                        <!--<li class="nav-item H1" style="width: 100px; padding-top: 10px;">
-                            <a href="@Url.Action("Contact","Home")">Pe azi</a>
-                        </li>-->
-                        <li class="nav-item H1" style="width: 100px; padding-top: 10px;">
-                            <a href="@Url.Action("Login","Home")">Calendar</a>
-                        </li>
-                        <nav class="ml-lg-3">
-                            <div class="search-bar">
-                                <form action="#" method="GET" class="search">
-                                    <input style="border: 1px solid black" type="search" class="search__input" name="search"
-                                           placeholder="Cautare..">
-                                    <span class="fa fa-search search__icon"></span>
-                            </div>
-                        </nav>
 
-                        <li class="nav-item H1" style="padding-top: 10px; width: 100px; padding-left: 25px">
-                            <a href="@Url.Action("Index", "Login")">Login</a>
-                        </li>
 
-                        <li class="nav-item H1" style="padding-top: 10px; width: 100px; padding-left: 25px">
-                            <a href="@Url.Action("Register", "Register")">Register</a>
-                        </li>
+                        @if (!FinalWebTODO.LocalMethod.IsLogged.isLogged())
+                        {
+                            <li class="nav-item H1" style="padding-top: 10px; width: 100px; padding-left: 25px">
+                                <a href="@Url.Action("Index", "Login")">Login</a>
+                            </li>
+
+                            <li class="nav-item H1" style="padding-top: 10px; width: 100px; padding-left: 25px">
+                                <a href="@Url.Action("Register", "Register")">Register</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item" style="width: 100px;">
+                                <a href="@Url.Action("Login", "Home")">Pagina Principala</a>
+                            </li>
+                            <li class="nav-item H1" style="width: 100px; padding-top: 10px;">
+                                <a href="@Url.Action("CreazaTodo", "Home")">Creaza</a>
+                            </li>
+                            <li class="nav-item H1" style="width: 100px; padding-top: 10px;">
+                                <a href="@Url.Action("TodoList", "Home")">Liste</a>
+                            </li>
+                            <!--<li class="nav-item H1" style="width: 100px; padding-top: 10px;">
+            <a href="@Url.Action("Contact", "Home")">Pe azi</a>
+        </li>-->
+                            <li class="nav-item H1" style="width: 100px; padding-top: 10px;">
+                                <a href="@Url.Action("Login", "Home")">Calendar</a>
+                            </li>
+                            <nav class="ml-lg-3">
+                                <div class="search-bar">
+                                    <form action="#" method="GET" class="search">
+                                        <input style="border: 1px solid black" type="search" class="search__input" name="search"
+                                               placeholder="Cautare..">
+                                        <span class="fa fa-search search__icon"></span>
+                                </div>
+                            </nav>
+
+                            <li class="nav-item H1" style="padding-top: 10px; width: 100px; padding-left: 25px">
+                                <a href="@Url.Action("LogOut", "Register")">LogOut</a>
+                            </li>
+                        }
+
+
+
                     </div>
                 </div>
                 <!-- toggle switch for light and dark theme -->

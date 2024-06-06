@@ -20,8 +20,6 @@ namespace FinalWebTODO.Domain.Entities.User
         [StringLength(30, MinimumLength = 2, ErrorMessage = "Sorry, no longer than 30 characters.")]
         public string Username { get; set; }
         
-
-    //rovna asta foloseste la logare
         [Required]
         [Display(Name = "Password")]
         [StringLength(40, MinimumLength = 8, ErrorMessage = "Password can`t be shorter than 8 characters.")]
@@ -31,10 +29,8 @@ namespace FinalWebTODO.Domain.Entities.User
         [Display(Name = "Email")]
         [StringLength(30)]
         public string Email { get; set; }
-    //pana aici
 
-
-        [DataType(DataType.Date)]
+        [DataType(DataType.Date)]   
         public DateTime LastLogin { get; set; }
 
         [StringLength(30)]

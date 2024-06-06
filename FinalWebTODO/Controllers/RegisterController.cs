@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
 using FinalWebTODO.Domain.Entities.User;
+using System.Web.Security;
 
 namespace FinalWebTODO.Controllers
 {
@@ -30,7 +31,6 @@ namespace FinalWebTODO.Controllers
         {
             if (ModelState.IsValid)
             {
-                Mapper.Initialize(cfg => cfg.CreateMap<UserLogin, ULoginDate>());
                 var data = Mapper.Map<ULoginDate>(login);
 
                 data.LoginIp = Request.UserHostAddress;
@@ -49,6 +49,23 @@ namespace FinalWebTODO.Controllers
                 }
             }
             return View();
+        }
+
+        public ActionResult LogOut()
+        {
+            Session.Abandon();
+            FormsAuthentication.SignOut();
+            if (Response.Cookies["X-KEY"] != null)
+            {
+                var cookie = new HttpCookie("X-KEY")
+                {
+                    Expires = DateTime.Now.AddDays(-1),
+                    HttpOnly = true
+                };
+                Response.Cookies.Add(cookie);
+            }
+
+            return RedirectToAction("Login", "Home");
         }
     }
 }

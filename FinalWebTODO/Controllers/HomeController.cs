@@ -81,7 +81,6 @@ namespace FinalWebTODO.Controllers
         {
             if(ModelState.IsValid)
             {
-                Mapper.Initialize(cfg => cfg.CreateMap<TodoData, UTodoDate>());
                 var data = Mapper.Map<UTodoDate>(todo);
 
                 data.TodoTime = DateTime.Now;
@@ -117,40 +116,10 @@ namespace FinalWebTODO.Controllers
             return View(list);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(TodoData todo)
-        {
-            if (ModelState.IsValid)
-            {
-                Mapper.Initialize(cfg => cfg.CreateMap<TodoData, UTodoDate>());
-                var data = Mapper.Map<UTodoDate>(todo);
-
-                // Salvează datele în baza de date
-                _session.SaveTodoData(data);
-                return RedirectToAction("TodoList");
-            }
-
-            // Dacă modelul nu este valid, reîntoarce vizualizarea cu datele curente
-            var viewModel = new CombinedModels
-            {
-                TodoList = _session.GetTodoList(),
-                TodoData = todo
-            };
-            return View("TodoList", viewModel);
-        }
-
         public ActionResult TodoList()
         {
-             var todoList = _session.GetTodoList(); // Obține lista de Todo-uri din sesiune sau baza de date
-
-            var viewModel = new CombinedModels
-            {
-                TodoList = todoList,
-                TodoData = new TodoData() // Inițializează un obiect TodoData gol sau populat după necesitate
-            };
-
-            return View(viewModel);
+            var todo = _session.GetTodoList();
+            return View(todo);
         }
 
 
@@ -160,6 +129,10 @@ namespace FinalWebTODO.Controllers
             return View();
         }
         public ActionResult Contact()
+        {
+            return View();
+        }
+        public ActionResult Contact2()
         {
             return View();
         }

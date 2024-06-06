@@ -10,7 +10,7 @@ namespace FinalWebTODO.BusinessLogic.DBModels
 {
     public class SessionContext: DbContext
     {
-        public SessionContext() : base("name=CCToolShop")
+        public SessionContext() : base("name=FinalWebTODO")
         {
         }
         public virtual DbSet<Session> Sessions { get; set; }

@@ -18,7 +18,7 @@ namespace FinalWebTODO.Controllers
             var bl = new BussinesLogic();
             _session = bl.GetSessionBl();
         }
-        /*
+        
         public void SessionStatus()
         {
             var apiCookie = Request.Cookies["X-KEY"];
@@ -49,6 +49,6 @@ namespace FinalWebTODO.Controllers
             {
                 System.Web.HttpContext.Current.Session["LoginStatus"] = "logout";
             }
-        }*/
+        }
     }   
 }

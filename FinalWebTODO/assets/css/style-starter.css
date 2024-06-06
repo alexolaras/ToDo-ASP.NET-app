@@ -11831,3 +11831,11 @@ h2.title {
     width: 100%;
     border: 2px solid black;
 }
+.yes:focus{
+    color: white;
+    background-color: black;
+}
+.no:focus {
+    color: white;
+    background-color: black;
+}

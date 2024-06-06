@@ -21,222 +21,227 @@
     <link rel="stylesheet" href="~/assets/css/style-starter.css" type="text/css" media="all" />
 </head>
 <body>
-
     <input type="text" id="companyNameInput" placeholder="Introduce denumirea Companiei" />
 
     <p>security policy</p>
     <div>
         <p class="aaa">Angajații sunt conștienți de politica de securitate a informațiilor și de procedurile asociate?</p>
         <button class="yes">da</button>
-        <button class="no">nu</button>
+        <button class="no" data-recommendation="Recomandare: Organizați sesiuni de training și conștientizare pentru angajați cu privire la politica de securitate a informațiilor și procedurile asociate.">nu</button>
     </div>
     <div>
         <p>Se aplică reguli de autentificare și autorizare adecvate pentru a proteja informațiile organizaționale?</p>
         <button class="yes">da</button>
-        <button class="no">nu</button>
+        <button class="no" data-recommendation="Recomandare: Implementați reguli stricte de autentificare și autorizare pentru protejarea informațiilor organizaționale.">nu</button>
     </div>
     <div>
         <p>Există un plan de gestionare a incidentelor de securitate a informațiilor în cazul producerii unor evenimente neprevăzute?</p>
         <button class="yes">da</button>
-        <button class="no">nu</button>
+        <button class="no" data-recommendation="Recomandare: Dezvoltați și implementați un plan de gestionare a incidentelor de securitate a informațiilor pentru a răspunde eficient în cazul unor evenimente neprevăzute.">nu</button>
     </div>
     <div>
         <p>Angajații sunt instruiți să recunoască și să gestioneze amenințările de securitate a informațiilor?</p>
         <button class="yes">da</button>
-        <button class="no">nu</button>
-    </div><div>
+        <button class="no" data-recommendation="Recomandare: Organizați traininguri regulate pentru angajați privind recunoașterea și gestionarea amenințărilor de securitate a informațiilor.">nu</button>
+    </div>
+    <div>
         <p>Există proceduri pentru monitorizarea și asigurarea conformității cu reglementările de securitate a informațiilor?</p>
         <button class="yes">da</button>
-        <button class="no">nu</button>
+        <button class="no" data-recommendation="Recomandare: Implementați proceduri pentru monitorizarea constantă și asigurarea conformității cu reglementările de securitate a informațiilor.">nu</button>
     </div>
 
     <p class="aaa">organization of information security section</p>
     <div>
         <p>Există un responsabil desemnat pentru gestionarea și implementarea măsurilor de securitate a informațiilor?</p>
         <button class="yes">da</button>
-        <button class="no">nu</button>
+        <button class="no" data-recommendation="Recomandare: Desemnați un responsabil pentru gestionarea și implementarea măsurilor de securitate a informațiilor.">nu</button>
     </div>
     <div>
         <p>Există programe de training și conștientizare pentru angajați privind bunele practici de securitate a informațiilor?</p>
         <button class="yes">da</button>
-        <button class="no">nu</button>
+        <button class="no" data-recommendation="Recomandare: Dezvoltați programe de training și conștientizare pentru angajați despre bunele practici de securitate a informațiilor.">nu</button>
     </div>
     <div>
         <p>Există proceduri pentru gestionarea concedierilor și plecărilor angajaților pentru a preveni pierderea sau divulgarea neautorizată a informațiilor?</p>
         <button class="yes">da</button>
-        <button class="no">nu</button>
+        <button class="no" data-recommendation="Recomandare: Stabiliți proceduri clare pentru gestionarea concedierilor și plecărilor angajaților pentru a preveni pierderea sau divulgarea neautorizată a informațiilor.">nu</button>
     </div>
     <div>
         <p>Există proceduri pentru gestionarea și actualizarea regulată a software-ului și a infrastructurii IT pentru a preveni vulnerabilitățile de securitate?</p>
         <button class="yes">da</button>
-        <button class="no">nu</button>
-    </div><div>
+        <button class="no" data-recommendation="Recomandare: Implementați proceduri pentru gestionarea și actualizarea regulată a software-ului și infrastructurii IT pentru a preveni vulnerabilitățile de securitate.">nu</button>
+    </div>
+    <div>
         <p>Sunt implementate procese și proceduri operaționale pentru asigurarea securității informațiilor în cadrul activităților zilnice ale organizației?</p>
         <button class="yes">da</button>
-        <button class="no">nu</button>
+        <button class="no" data-recommendation="Recomandare: Implementați procese și proceduri operaționale pentru asigurarea securității informațiilor în cadrul activităților zilnice ale organizației.">nu</button>
     </div>
 
     <p class="aaa">asset management</p>
     <div>
         <p>Care sunt activitățile și resursele critice pentru operațiile și obiectivele organizației?</p>
         <button class="yes">da</button>
-        <button class="no">nu</button>
+        <button class="no" data-recommendation="Recomandare: Identificați și documentați activitățile și resursele critice pentru operațiile și obiectivele organizației.">nu</button>
     </div>
     <div>
         <p>Cum sunt clasificate datele și informațiile pentru a le asigura protecția corespunzătoare?</p>
         <button class="yes">da</button>
-        <button class="no">nu</button>
+        <button class="no" data-recommendation="Recomandare: Stabiliți un sistem de clasificare a datelor și informațiilor pentru a le asigura protecția corespunzătoare.">nu</button>
     </div>
     <div>
         <p>Există proceduri pentru asigurarea integrității și confidențialității datelor în timpul stocării, prelucrării și transmiterii acestora?</p>
         <button class="yes">da</button>
-        <button class="no">nu</button>
+        <button class="no" data-recommendation="Recomandare: Implementați proceduri pentru asigurarea integrității și confidențialității datelor în timpul stocării, prelucrării și transmiterii acestora.">nu</button>
     </div>
     <div>
         <p>Există politici și proceduri pentru gestionarea ciclului de viață al activelor, inclusiv actualizarea și eliminarea în mod sigur a informațiilor vechi sau neutilizate?</p>
         <button class="yes">da</button>
-        <button class="no">nu</button>
-    </div><div>
+        <button class="no" data-recommendation="Recomandare: Implementați politici și proceduri pentru gestionarea ciclului de viață al activelor, inclusiv actualizarea și eliminarea sigură a informațiilor vechi sau neutilizate.">nu</button>
+    </div>
+    <div>
         <p>Există proceduri pentru monitorizarea și auditarea utilizării și accesului la activelor informaționale?</p>
         <button class="yes">da</button>
-        <button class="no">nu</button>
+        <button class="no" data-recommendation="Recomandare: Stabiliți proceduri pentru monitorizarea și auditarea utilizării și accesului la activele informaționale.">nu</button>
     </div>
 
-    <p class="aaa">human resources security  section</p>
+    <p class="aaa">human resources security section</p>
     <div>
         <p>Există proceduri pentru verificarea antecedentelor și a referințelor angajaților potențiali înainte de angajare?</p>
         <button class="yes">da</button>
-        <button class="no">nu</button>
+        <button class="no" data-recommendation="Recomandare: Implementați proceduri pentru verificarea antecedentelor și a referințelor angajaților potențiali înainte de angajare.">nu</button>
     </div>
     <div>
         <p>Sunt angajații instruiți și conștienți de politica și procedurile de securitate a informațiilor înainte de a avea acces la acestea?</p>
         <button class="yes">da</button>
-        <button class="no">nu</button>
+        <button class="no" data-recommendation="Recomandare: Asigurați-vă că angajații sunt instruiți și conștienți de politica și procedurile de securitate a informațiilor înainte de a avea acces la acestea.">nu</button>
     </div>
     <div>
         <p>Există proceduri pentru revizuirea și actualizarea periodică a privilegiilor de acces pentru a asigura adecvarea lor cu poziția și responsabilitățile angajaților?</p>
         <button class="yes">da</button>
-        <button class="no">nu</button>
+        <button class="no" data-recommendation="Recomandare: Stabiliți proceduri pentru revizuirea și actualizarea periodică a privilegiilor de acces pentru a asigura adecvarea lor cu poziția și responsabilitățile angajaților.">nu</button>
     </div>
     <div>
         <p>Există proceduri pentru revocarea rapidă și sigură a accesului angajaților care pleacă din organizație?</p>
         <button class="yes">da</button>
-        <button class="no">nu</button>
-    </div><div>
+        <button class="no" data-recommendation="Recomandare: Implementați proceduri pentru revocarea rapidă și sigură a accesului angajaților care pleacă din organizație.">nu</button>
+    </div>
+    <div>
         <p>Există proceduri pentru a preveni divulgarea neautorizată sau utilizarea incorectă a informațiilor sensibile de către angajați?</p>
         <button class="yes">da</button>
-        <button class="no">nu</button>
+        <button class="no" data-recommendation="Recomandare: Stabiliți proceduri pentru a preveni divulgarea neautorizată sau utilizarea incorectă a informațiilor sensibile de către angajați.">nu</button>
     </div>
 
     <p class="aaa">physical and environmental security section</p>
     <div>
         <p>Există sisteme de securitate fizică, cum ar fi încuietori, carduri de acces sau alte mecanisme de control al accesului la intrările principale și secundare?</p>
         <button class="yes">da</button>
-        <button class="no">nu</button>
+        <button class="no" data-recommendation="Recomandare: Implementați sisteme de securitate fizică, cum ar fi încuietori, carduri de acces sau alte mecanisme de control al accesului la intrările principale și secundare.">nu</button>
     </div>
     <div>
         <p>Există sisteme de supraveghere video și alarme care sunt active și monitorizate în timp real?</p>
         <button class="yes">da</button>
-        <button class="no">nu</button>
+        <button class="no" data-recommendation="Recomandare: Asigurați-vă că există sisteme de supraveghere video și alarme care sunt active și monitorizate în timp real.">nu</button>
     </div>
     <div>
         <p>Există proceduri pentru înregistrarea și marcarea echipamentelor și activelor pentru a facilita identificarea și recuperarea în caz de pierdere sau furt?</p>
         <button class="yes">da</button>
-        <button class="no">nu</button>
+        <button class="no" data-recommendation="Recomandare: Stabiliți proceduri pentru înregistrarea și marcarea echipamentelor și activelor pentru a facilita identificarea și recuperarea în caz de pierdere sau furt.">nu</button>
     </div>
     <div>
         <p>Există planuri și proceduri pentru gestionarea și reducerea riscurilor de mediu și pentru a asigura continuitatea operațională în caz de evenimente neprevăzute?</p>
         <button class="yes">da</button>
-        <button class="no">nu</button>
-    </div><div>
+        <button class="no" data-recommendation="Recomandare: Dezvoltați planuri și proceduri pentru gestionarea și reducerea riscurilor de mediu și pentru a asigura continuitatea operațională în caz de evenimente neprevăzute.">nu</button>
+    </div>
+    <div>
         <p>Există proceduri pentru gestionarea și monitorizarea corespunzătoare a echipamentelor și activelor în timpul transportului și a altor operațiuni externe?</p>
         <button class="yes">da</button>
-        <button class="no">nu</button>
+        <button class="no" data-recommendation="Recomandare: Implementați proceduri pentru gestionarea și monitorizarea corespunzătoare a echipamentelor și activelor în timpul transportului și a altor operațiuni externe.">nu</button>
     </div>
 
     <p class="aaa">communication and operations management section</p>
     <div>
         <p>Sunt aceste politici și proceduri clare, actualizate și comunicate adecvat tuturor angajaților?</p>
         <button class="yes">da</button>
-        <button class="no">nu</button>
+        <button class="no" data-recommendation="Recomandare: Asigurați-vă că politicile și procedurile sunt clare, actualizate și comunicate adecvat tuturor angajaților.">nu</button>
     </div>
     <div>
-        <p>Există proceduri stabilite pentru raportarea și gestionarea incidentelor de securitate a informațiilor sau a evenimentelor operaționale?</p>
+        <p>
+            Există proceduri stabilite pentru raportarea și gestionarea incidentelor de securitate a
+        <p>Există proceduri stabilite pentru raportarea și gestionarea incidentelor de securitate a informațiilor?</p>
         <button class="yes">da</button>
-        <button class="no">nu</button>
+        <button class="no" data-recommendation="Recomandare: Stabiliți proceduri clare pentru raportarea și gestionarea incidentelor de securitate a informațiilor.">nu</button>
     </div>
     <div>
-        <p>Există proceduri pentru evaluarea și aprobarea schimbărilor și pentru menținerea unei configurații sigure și actualizate a sistemelor?</p>
+        <p>Există procese pentru monitorizarea și revizuirea periodică a eficacității măsurilor de securitate implementate?</p>
         <button class="yes">da</button>
-        <button class="no">nu</button>
+        <button class="no" data-recommendation="Recomandare: Implementați procese pentru monitorizarea și revizuirea periodică a eficacității măsurilor de securitate implementate.">nu</button>
     </div>
     <div>
-        <p>Există instrumente sau platforme de comunicare securizate și autorizate pentru schimbul de informații între angajați și echipe?</p>
+        <p>Există proceduri pentru gestionarea și protejarea corespunzătoare a mediilor de stocare și a dispozitivelor mobile?</p>
         <button class="yes">da</button>
-        <button class="no">nu</button>
-    </div><div>
-        <p>Există proceduri pentru evaluarea și monitorizarea serviciilor furnizorilor și pentru asigurarea conformității cu standardele de securitate?</p>
+        <button class="no" data-recommendation="Recomandare: Stabiliți proceduri pentru gestionarea și protejarea corespunzătoare a mediilor de stocare și a dispozitivelor mobile.">nu</button>
+    </div>
+    <div>
+        <p>Există proceduri pentru asigurarea confidențialității și integrității informațiilor transmise prin rețele de comunicații?</p>
         <button class="yes">da</button>
-        <button class="no">nu</button>
+        <button class="no" data-recommendation="Recomandare: Implementați proceduri pentru asigurarea confidențialității și integrității informațiilor transmise prin rețele de comunicații.">nu</button>
+    </div>
+    <div>
+        <p>Există proceduri pentru gestionarea și controlul accesului la informațiile sensibile?</p>
+        <button class="yes">da</button>
+        <button class="no" data-recommendation="Recomandare: Stabiliți proceduri pentru gestionarea și controlul accesului la informațiile sensibile.">nu</button>
     </div>
 
-    <div class="statistics">
-        <h2>Statistici:</h2>
-        <p>Procentaj răspunsuri "da": <span id="yesPercentage">0%</span></p>
-        <p>Procentaj răspunsuri "nu": <span id="noPercentage">0%</span></p>
-    </div>
-
-    <form id="myForm">
-        <button type="submit">Submit</button>
-    </form>
+    <!-- Buton de trimitere -->
+    <button id="submit">Submit</button>
 
     <script>
-        // Funcție pentru actualizarea statisticilor
-        function updateStatistics() {
-            const yesCount = document.querySelectorAll('.yes.clicked').length;
-            const noCount = document.querySelectorAll('.no.clicked').length;
-            const totalCount = yesCount + noCount;
+        document.addEventListener('DOMContentLoaded', function () {
+            let buttons = document.querySelectorAll('button');
+            let submitButton = document.getElementById('submit');
+            let responses = {};
 
-            const yesPercentage = totalCount > 0 ? (yesCount / totalCount * 100).toFixed(2) + '%' : '0%';
-            const noPercentage = totalCount > 0 ? (noCount / totalCount * 100).toFixed(2) + '%' : '0%';
+            buttons.forEach(button => {
+                if (button.className === 'yes' || button.className === 'no') {
+                    button.addEventListener('click', function () {
+                        let question = button.parentElement.querySelector('p').innerText;
+                        responses[question] = {
+                            answer: button.className,
+                            recommendation: button.dataset.recommendation || ''
+                        };
 
-            document.getElementById('yesPercentage').textContent = yesPercentage;
-            document.getElementById('noPercentage').textContent = noPercentage;
-        }
+                        button.parentElement.querySelectorAll('button').forEach(btn => btn.classList.remove('clicked'));
+                        button.classList.add('clicked');
+                    });
+                }
+            });
 
-        // Adaugă event listener pentru butoanele "yes" și "no"
-        document.querySelectorAll('.yes, .no').forEach(button => {
-            button.addEventListener('click', function () {
-                this.classList.toggle('clicked');
-                updateStatistics();
+            submitButton.addEventListener('click', function () {
+                let allQuestionsAnswered = true;
+                document.querySelectorAll('div').forEach(div => {
+                    let question = div.querySelector('p').innerText;
+                    if (!responses[question]) {
+                        allQuestionsAnswered = false;
+                    }
+                });
+
+                if (allQuestionsAnswered) {
+                    let message = "Formular trimis cu succes!\n\n";
+                    for (let question in responses) {
+                        message += question + " - Răspuns: " + responses[question].answer;
+                        if (responses[question].answer === 'no') {
+                            message += "\n" + responses[question].recommendation;
+                        }
+                        message += "\n\n";
+                    }
+                    alert(message);
+                } else {
+                    alert("Vă rugăm să răspundeți la toate întrebările înainte de a trimite formularul.");
+                }
             });
         });
-
-        // Funcție pentru a afișa mesajul la submit
-        function showAlertByPercentage(event) {
-            event.preventDefault();
-
-            const yesCount = document.querySelectorAll('.yes.clicked').length;
-            const noCount = document.querySelectorAll('.no.clicked').length;
-            const totalCount = yesCount + noCount;
-
-            const yesPercentage = totalCount > 0 ? (yesCount / totalCount * 100) : 0;
-
-            if (yesPercentage >= 75) {
-                alert("Nivelul de insecuritate este foarte ridicat, se recomanda de revizuid: " + yesPercentage.toFixed(2) + "%");
-            } else if (yesPercentage >= 50) {
-                alert("Nivelul de insecuritate mediu, se recomanda o usoara revizzuire: " + yesPercentage.toFixed(2) + "%");
-            } else {
-                alert("Bai, cate de cat norm, scazut: " + yesPercentage.toFixed(2) + "%");
-            }
-        }
-
-        // Adaugă event listener pentru formularul de submit
-        document.getElementById('myForm').addEventListener('submit', showAlertByPercentage);
-
     </script>
 </body>
-
 
 
 

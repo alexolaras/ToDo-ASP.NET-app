@@ -80,3 +80,4 @@ C:\Users\djskd\Desktop\FinalWebTODO\FinalWebTODO.BusinessLogic\bin\Debug\Microso
 C:\Users\djskd\Desktop\FinalWebTODO\FinalWebTODO.BusinessLogic\bin\Debug\FinalWebTODO.Helpers.dll.config
 C:\Users\djskd\Desktop\FinalWebTODO\FinalWebTODO.BusinessLogic\bin\Debug\Microsoft.EntityFrameworkCore.Design.xml
 C:\Users\djskd\Desktop\FinalWebTODO\FinalWebTODO.BusinessLogic\bin\Debug\Microsoft.EntityFrameworkCore.Relational.xml
+C:\Users\djskd\Desktop\FinalWebTODO\FinalWebTODO.BusinessLogic\bin\Debug\AutoMapper.pdb

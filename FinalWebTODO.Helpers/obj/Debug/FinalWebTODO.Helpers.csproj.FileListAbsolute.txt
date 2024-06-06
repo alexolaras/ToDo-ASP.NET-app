@@ -63,3 +63,6 @@ C:\Users\djskd\Desktop\FinalWebTODO\FinalWebTODO.Helpers\bin\Debug\Microsoft.Ent
 C:\Users\djskd\Desktop\FinalWebTODO\FinalWebTODO.Helpers\bin\Debug\Microsoft.EntityFrameworkCore.Relational.dll
 C:\Users\djskd\Desktop\FinalWebTODO\FinalWebTODO.Helpers\bin\Debug\Microsoft.EntityFrameworkCore.Design.xml
 C:\Users\djskd\Desktop\FinalWebTODO\FinalWebTODO.Helpers\bin\Debug\Microsoft.EntityFrameworkCore.Relational.xml
+C:\Users\djskd\Desktop\FinalWebTODO\FinalWebTODO.Helpers\bin\Debug\System.ValueTuple.dll
+C:\Users\djskd\Desktop\FinalWebTODO\FinalWebTODO.Helpers\bin\Debug\AutoMapper.pdb
+C:\Users\djskd\Desktop\FinalWebTODO\FinalWebTODO.Helpers\bin\Debug\System.ValueTuple.xml

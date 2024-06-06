@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FinalWebTODO.BusinessLogic.DBModels;
 using FinalWebTODO.Domain.Entities.User;
+using FinalWebTODO.Domain.Enums;
 using FinalWebTODO;
 using System.Data.Entity;
 using AutoMapper;
@@ -13,6 +14,7 @@ using System.Web;
 using eUseControl.Helpers;
 using RestSharp;
 using System.Web.UI.WebControls;
+using System.Net;
 
 namespace FinalWebTODO.BusinessLogic.Core
 {
@@ -75,60 +77,73 @@ namespace FinalWebTODO.BusinessLogic.Core
 
         internal ULoginResp UserLoginAction(ULoginDate data)
         {
-            UDbTable result;
+            UDbTable user;
             var validate = new EmailAddressAttribute();
-            if(validate.IsValid(data.Credential))
+            if (validate.IsValid(data.Credential))
             {
-                var pass = LoginHelper.HashGen(data.Password);
                 using (var db = new UserContext())
                 {
-                    result = db.Users.FirstOrDefault(u => u.Email == data.Credential && u.Password == pass);
+                    user = db.Users.FirstOrDefault(us => us.Email == data.Credential);
                 }
 
-                if (result == null)
+                if (user != null)
                 {
-                    return new ULoginResp { Status = false, StatusMsg = "The Username or Password is Incorrect" };
-                }
+                    var hashedPassword = LoginHelper.HashGen(data.Password);
+                    if (user != null && user.Password == hashedPassword)
+                    {
+                        using (var db = new UserContext())
+                        {
+                            user.LastIp = data.LoginIp;
+                            user.LastLogin = data.LoginDateTime;
+                            db.Entry(user).State = EntityState.Modified;
+                        }
 
-                
-                using (var todo = new UserContext())
-                {
-                    result.LastIp = data.LoginIp;
-                    result.LastLogin = data.LoginDateTime;
-                    todo.Entry(result).State = EntityState.Modified;
-                    todo.SaveChanges();
+
+                        if (user.level == URole.User)
+                            return new ULoginResp { Status = true, StatusMsg = "user" };
+                        else
+                             if (user.level == URole.Admin)
+                            return new ULoginResp { Status = true, StatusMsg = "admin" };
+                    }
                 }
-                
-                
-                return new ULoginResp { Status = true };
-                
             }
             else
             {
-                var pass = LoginHelper.HashGen(data.Password);
                 using (var db = new UserContext())
                 {
-                    result = db.Users.FirstOrDefault(u => u.Username == data.Credential && u.Password == data.Password);
+                    user = db.Users.FirstOrDefault(us => us.Username == data.Credential);
                 }
 
-                if (result == null)
+                if (user != null)
                 {
-                    return new ULoginResp { Status = false, StatusMsg = "The Username or Password is Incorrect" };
+                    var hashedPassword = LoginHelper.HashGen(data.Password);
+                    if (user != null && user.Password == hashedPassword)
+                    {
+                        using (var db = new UserContext())
+                        {
+                            user.LastIp = data.LoginIp;
+                            user.LastLogin = data.LoginDateTime;
+                            db.Entry(user).State = EntityState.Modified;
+                            //db.SaveChanges();
+                        }
+
+
+                        if (user.level == URole.User)
+                            return new ULoginResp { Status = true, StatusMsg = "user" };
+                        else
+                             if (user.level == URole.Admin)
+                            return new ULoginResp { Status = true, StatusMsg = "admin" };
+                    }
                 }
-                
-                using (var todo = new UserContext())
-                {
-                    result.LastIp = data.LoginIp;
-                    result.LastLogin = data.LoginDateTime;
-                    todo.Entry(result).State = EntityState.Modified;
-                    todo.SaveChanges();
-                }
-                
-                return new ULoginResp { Status = true };
-                
             }
+
+
+
+            // Authentication failed
+            return new ULoginResp { Status = false, StatusMsg = "none" };
         }
-        
+
+
         //registrare
 
         internal ULoginResp UserRegisterAction(ULoginDate data)
@@ -189,53 +204,39 @@ namespace FinalWebTODO.BusinessLogic.Core
         }
 
         //Cookie
-        /*
-        internal HttpCookie Cookie(string loginCredential)
-        {
-            var apiCookie = new HttpCookie("X-KEY")
+        public System.Web.HttpCookie Cookie(string credential)
+{
+            var apiCookie = new System.Web.HttpCookie("X-KEY")
             {
-                Value = CookieGenerator.Create(loginCredential)
+                Value = CookieGenerator.Create(credential)
             };
-
             using (var db = new SessionContext())
             {
-                Session curent;
-                var validate = new EmailAddressAttribute();
-                if (validate.IsValid(loginCredential))
-                {
-                    curent = (from u in db.Sessions where u.Username == loginCredential select u).FirstOrDefault();
-                }
-                else
-                {
-                    curent = (from u in db.Sessions where u.Username == loginCredential select u).FirstOrDefault();
-                }
-
+                var curent = db.Sessions.FirstOrDefault(e => e.Username == credential);
                 if (curent != null)
                 {
                     curent.CookieString = apiCookie.Value;
                     curent.ExpireTime = DateTime.Now.AddMinutes(60);
-                    using (var todo = new SessionContext())
-                    {
-                        todo.Entry(curent).State = EntityState.Modified;
-                        todo.SaveChanges();
-                    }
+                    db.Entry(curent).State = EntityState.Modified;
+                    db.SaveChanges();
                 }
                 else
                 {
                     db.Sessions.Add(new Session
                     {
-                        Username = loginCredential,
+                        Username = credential,
                         CookieString = apiCookie.Value,
                         ExpireTime = DateTime.Now.AddMinutes(60)
                     });
                     db.SaveChanges();
                 }
             }
-
             return apiCookie;
         }
-        
-        internal UserMinimal UserCookie(string cookie)
+
+
+
+        public UserMinimal UserCookie(string cookie)
         {
             Session session;
             UDbTable curentUser;
@@ -260,10 +261,9 @@ namespace FinalWebTODO.BusinessLogic.Core
             }
 
             if (curentUser == null) return null;
-            Mapper.Initialize(cfg => cfg.CreateMap<UDbTable, UserMinimal>());
             var userminimal = Mapper.Map<UserMinimal>(curentUser);
 
             return userminimal;
-        }*/
+        }
     }
 }

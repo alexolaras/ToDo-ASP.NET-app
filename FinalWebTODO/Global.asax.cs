@@ -1,4 +1,7 @@
-﻿using FinalWebTODO.App_Start;
+﻿using AutoMapper;
+using FinalWebTODO.App_Start;
+using FinalWebTODO.Domain.Entities.User;
+using FinalWebTODO.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +23,11 @@ namespace FinalWebTODO
            RouteConfig.RegisterRoutes(RouteTable.Routes);
 
            BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            Mapper.Initialize(cfg => {
+                cfg.CreateMap<UDbTable, UserMinimal>();
+                cfg.CreateMap<UserLogin, ULoginDate>();
+            });
         }
     }
 }
