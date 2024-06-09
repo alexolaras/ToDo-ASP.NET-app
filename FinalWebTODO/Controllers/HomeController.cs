@@ -13,7 +13,7 @@ using System.Web.UI.WebControls;
 
 namespace FinalWebTODO.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
 
         public ActionResult Register()
@@ -24,10 +24,9 @@ namespace FinalWebTODO.Controllers
             }
             return View();
         }
-
+        //logare mai jos
         public ActionResult Index()
         {
-        //    SessionStatus(); 
             if ((string)System.Web.HttpContext.Current.Session["LoginStatus"] != "login")
             {
                 return RedirectToAction("Login", "Home");
@@ -77,15 +76,15 @@ namespace FinalWebTODO.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreazaTodo(TodoData todo)
+        public ActionResult CreazaTodo(TodoMinimal todo)
         {
             if(ModelState.IsValid)
             {
-                var data = Mapper.Map<UTodoDate>(todo);
+                var currentUser = System.Web.HttpContext.Current.GetMySessionObject();
 
-                data.TodoTime = DateTime.Now;
+                todo.Data = DateTime.Now;
 
-                var userTodo = _session.UserTodo(data);
+                var userTodo = _session.UserTodo(todo, currentUser);
 
                 if (userTodo.Status)
                 {
@@ -116,9 +115,12 @@ namespace FinalWebTODO.Controllers
             return View(list);
         }
 
+        [HttpGet]
         public ActionResult TodoList()
         {
-            var todo = _session.GetTodoList();
+            var currentUser = System.Web.HttpContext.Current.GetMySessionObject();
+            var todo = _session.GetTodoList(currentUser);
+
             return View(todo);
         }
 

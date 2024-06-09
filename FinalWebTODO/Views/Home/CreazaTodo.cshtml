@@ -61,19 +61,6 @@
 
     <textarea class="todo-subiect2" type="text" placeholder="Descrierea" style="margin-bottom: 20px;"></textarea>
     -->
-
-                <div style="display:flex; margin: 10px">
-                    <p class="todo-tipul">Tipul:</p>
-                    @Html.TextBoxFor(m => m.Tipul, new
-               {
-                   placeHolder = "Tipul",
-                   name = "Tipul",
-                   id = "Tipul",
-                   @class = "todo-tipul2"
-               })
-                    @Html.ValidationMessageFor(m => m.Tipul)
-
-                </div>
                 <div style="display:flex; margin: 10px">
                     <p class="todo-data">Data</p>
                     <input class="todo-data2" type="date"
@@ -85,11 +72,11 @@
                 </div>
                 <div style="display: flex; margin: 10px">
                     <p class="todo-lista">Selecteaza lista:</p>
-                    <select class="todo-lista2">
-                        <option></option>
-
-
-                    </select>
+                    @Html.TextBoxFor(m => m.Lista, new
+               {
+                   placeHolder = "Lista",
+                   @class = "todo-lista2"
+               })
                 
                 </div>
             }

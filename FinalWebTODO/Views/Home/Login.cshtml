@@ -4,15 +4,59 @@
     Layout = "~/Views/_LayoutPage1.cshtml";
 }
 <!-- banner section -->
-<img src="~/assets/images/Space.jpg" class="Spatiu" style="height: auto" />
-<section id="home" class="py-5" style="background">
-    <div class="container py-lg-5 mt-lg-5">
-        <div class="py-lg-4 my-2">
-            <div class="banner-info-grid mt-lg-5">
-                <h3 class="mb-4">Bun venit pe <br/>ToDo Llist!!</h3>
+
+<section id="home" class="py-5" style="padding: 0">
+    <div style="padding-top: 10px; text-align: center;">
+        <div style="padding-top: 10px; text-align: center;">
+
+            <div style="padding-top: 10px; text-align: center; ">
+                <h3 style="padding: 0; margin: 0" class="h12">Bun venit pe <br />ToDo Llist!!</h3>
             </div>
+
+            @if (!FinalWebTODO.LocalMethod.IsLogged.isLogged())
+            {
+                <div>
+                    <p style="margin-top: 25px;" class="h12">pentru a dispune de functionalitatile site-ului, rog inregistrarea sau logarea pe acesta</p>
+                </div>
+            }
+
+            <div style="display: block; margin-top: 50px">
+                <div class="div1" style="display: inline-block">
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                </div>
+                <div class="div2" style="display: inline-block">
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                </div>
+                <div class="div3" style="display: inline-block">
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                </div>
+            </div>
+
+        </div>
+        <div>
+            <div style="padding-top: 10px; text-align: center; ">
+                <h3 style="padding: 0; margin: 0" class="h12">Fondatorii Site-ului</h3>
+            </div>
+
+            @if (!FinalWebTODO.LocalMethod.IsLogged.isLogged())
+            {
+                <div>
+                    <p style="margin-top: 25px;" class="h12">se pare ca ai uitat sa te loghezi..</p>
+                </div>
+            }
+
+            <div style="display: block; margin-top: 50px">
+                <div class="div12" style="display: inline-block">
+                    <img />
+                </div>
+                <div class="div22" style="display: inline-block">
+                    <img />
+                </div>
+                <div class="div32" style="display: inline-block">
+                    <img />
+                </div>
+            </div>
+
         </div>
     </div>
 </section>
-<!-- //banner section -->
-

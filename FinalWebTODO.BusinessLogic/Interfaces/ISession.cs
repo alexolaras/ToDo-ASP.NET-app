@@ -13,11 +13,12 @@ namespace FinalWebTODO.BusinessLogic.Interfaces
 
         ULoginResp SaveTodoData(UTodoDate data);
 
-        ULoginResp UserTodo(UTodoDate data); 
+        ULoginResp UserTodo(TodoMinimal todo, UserMinimal user); 
+
         ULoginResp UserRegister(ULoginDate data);
         ULoginResp UserLogin(ULoginDate data);
 
-        List<TodoDbTable> GetTodoList();
+        List<TodoMinimal> GetTodoList(UserMinimal user);
 
 
         List<UDbTable> GetUserList();

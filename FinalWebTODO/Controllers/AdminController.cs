@@ -49,7 +49,7 @@ namespace FinalWebTODO.Controllers
         [HttpPost]
         [Route("Admin/EditUserInfo/{id}")]
         [ValidateAntiForgeryToken]
-        public ActionResult EditUserInfoConfirm(int id, UserMinimal userModel)
+        public ActionResult EditUserInfo(int id, UserMinimal userModel)
         {
             SessionStatus();
             if (ModelState.IsValid)
@@ -74,56 +74,5 @@ namespace FinalWebTODO.Controllers
             }
             return RedirectToAction("Tables");
         }
-/*
-        [AdminModAttributes]
-        [HttpGet]
-        [Route("Admin/UserActivity/{id}")]
-        public ActionResult UserActivity(int id)
-        {
-            SessionStatus();
-            var user = _session.RGetUserById(id);
-            var userActivityFromDB = _session.GetHistory(user);
-            if (userActivityFromDB == null)
-            {
-                return View();
-            }
-            else
-            {
-                return View("UserActivity", userActivityFromDB);
-            }
-        }
-
-        [AdminModAttributes]
-        [HttpGet]
-        [Route("Admin/UserCards/{id}")]
-        public ActionResult UserCards(int id)
-        {
-            SessionStatus();
-            var user = _session.RGetUserById(id);
-            var userActivityFromDB = _session.GetCards(user);
-            if (userActivityFromDB == null)
-            {
-                return View();
-            }
-            else
-            {
-                return View("UserCards", userActivityFromDB);
-            }
-        }
-
-        [AdminModAttributes]
-        [HttpPost]
-        [Route("Admin/BlockCard/{id}")]
-        [ValidateAntiForgeryToken]
-        public ActionResult BlockCard(int id)
-        {
-            SessionStatus();
-            if (ModelState.IsValid)
-            {
-                _session.BlockCard(id);
-                return RedirectToAction("Tables");
-            }
-            return RedirectToAction("Tables");
-        }
-    */}
+    }
 }

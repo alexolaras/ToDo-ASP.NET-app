@@ -1,9 +1,8 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "EditUserInfo";
 }
-
 @model FinalWebTODO.Domain.Entities.User.UserMinimal
+
 <h2>EditUserInfo</h2>
 
 <section>
@@ -27,8 +26,10 @@
                 new SelectListItem { Text = "Admin", Value = "Admin" },
                 new SelectListItem { Text = "User", Value = "User" },
             }, "Value", "Text"), new { @class = "dropdown" })
+
             <button type="submit" class="accept">Edit</button>
-            <button onclick="location.href=@Url.Action("Tables","Admin");return false;" class="cancel">Cancel</button>
+            <button type="button" onclick="location.href='@Url.Action("Tables","Admin")'" class="cancel">Cancel</button>
+
         }
 
     </div>

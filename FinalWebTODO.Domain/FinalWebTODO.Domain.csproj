@@ -141,6 +141,7 @@
   <ItemGroup>
     <Compile Include="Entities\User\Session.cs" />
     <Compile Include="Entities\User\TodoDbTable.cs" />
+    <Compile Include="Entities\User\TodoMinimal.cs" />
     <Compile Include="Entities\User\UTodoDate.cs" />
     <Compile Include="Entities\User\UDbTable.cs" />
     <Compile Include="Entities\User\ULoginDate.cs" />

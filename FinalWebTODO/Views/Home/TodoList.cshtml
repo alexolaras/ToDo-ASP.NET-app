@@ -1,4 +1,4 @@
-﻿@model List<FinalWebTODO.Domain.Entities.User.TodoDbTable>
+﻿@model List<FinalWebTODO.Domain.Entities.User.TodoMinimal>
 @{
     ViewBag.Title = "TodoList";
 }
@@ -13,6 +13,10 @@
         <div>
             <label for="descriere">Descriere</label>
             <p style="padding-left: 20px" id="descriere" name="descriere">@todo.Descriere</p>
+        </div>
+        <div>
+            <label for="lista">Lista</label>
+            <p style="padding-left: 20px" id="lista" name="lista">@todo.Lista</p>
         </div>
     </div>
 }

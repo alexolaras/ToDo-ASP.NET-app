@@ -1,4 +1,5 @@
-﻿using FinalWebTODO.Extension;
+﻿using FinalWebTODO.Domain.Enums;
+using FinalWebTODO.Extension;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,6 @@ namespace FinalWebTODO.LocalMethod
             {
                 return true;
             }
-            else
             {
                 return false;
             }

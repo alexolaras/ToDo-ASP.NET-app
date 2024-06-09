@@ -16,10 +16,9 @@ namespace FinalWebTODO.BusinessLogic
             return UserChangeAction(data);
         }
 
-
-        public ULoginResp UserTodo(UTodoDate data)
+        public ULoginResp UserTodo(TodoMinimal todo, UserMinimal user)
         {
-            return UserTodoAction(data);
+            return UserTodoAction(todo, user);
         }
         
         public ULoginResp UserRegister(ULoginDate data)
@@ -31,9 +30,9 @@ namespace FinalWebTODO.BusinessLogic
             return UserLoginAction(data);
         } 
 
-        public List<TodoDbTable> GetTodoList()
+        public List<TodoMinimal> GetTodoList(UserMinimal user)
         {
-            return RGetTodoList();
+            return RGetTodoList(user);
         }
 
         public List<UDbTable> GetUserList()

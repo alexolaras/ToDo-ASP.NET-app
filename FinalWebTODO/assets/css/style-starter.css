@@ -11671,10 +11671,59 @@ h2.title {
 }
 
 .Spatiu {
-    display: inline-block;
-    position: absolute;
     width: 100%;
     height: auto;
+}
+
+.div1{
+    border: solid 1px;
+    padding: 25px;
+    margin: 15px 50px 25px 50px;
+    height: auto;
+    width: 350px;
+}
+.div2 {
+    border: solid 1px;
+    padding: 25px;
+    margin: 15px 50px 25px 50px;
+    height: auto;
+    width: 350px;
+}
+.div3 {
+    border: solid 1px;
+    padding: 25px;
+    margin: 15px 50px 25px 50px;
+    height: auto;
+    width: 350px;
+}
+
+.div12 {
+    border: solid 1px;
+    padding: 25px;
+    margin: 15px 50px 25px 50px;
+    height: 550px;
+    width: 350px;
+}
+
+.div22 {
+    border: solid 1px;
+    padding: 25px;
+    margin: 15px 50px 25px 50px;
+    height: 550px;
+    width: 350px;
+}
+
+.div32 {
+    border: solid 1px;
+    padding: 25px;
+    margin: 15px 50px 25px 50px;
+    height: 550px;
+    width: 350px;
+}
+
+
+.h12 {
+    font-family: Cursive;
 }
 
 

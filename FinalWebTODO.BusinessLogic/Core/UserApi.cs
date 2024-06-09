@@ -49,20 +49,24 @@ namespace FinalWebTODO.BusinessLogic.Core
         }
 
 
-        internal ULoginResp UserTodoAction(UTodoDate data)
+        public ULoginResp UserTodoAction(TodoMinimal todo, UserMinimal user)
         {
-            TodoDbTable result;
-
+            TodoDbTable resutl;
             using( var db = new TodoContext())
             {
-                result = db.Todos.FirstOrDefault(u => u.Subiect == data.Subiect);
+                resutl = db.Todos.FirstOrDefault(m => m.Lista == todo.Lista);
+                if(resutl == null)
+                {
+                    todo.Lista = "null";
+                }
             }
-
             var newTodo = new TodoDbTable()
             {
-                Data = data.TodoTime,
-                Subiect = data.Subiect,
-                Descriere = data.Descriere,
+                UserId = user.Id,
+                Lista = todo.Lista,
+                Data = todo.Data,
+                Subiect = todo.Subiect,
+                Descriere = todo.Descriere,
             };
 
             using (var db = new TodoContext())
@@ -185,13 +189,32 @@ namespace FinalWebTODO.BusinessLogic.Core
             }
         }
 
-        public List<TodoDbTable> RGetTodoList()
+        public List<TodoMinimal> RGetTodoList(UserMinimal user)
         {
-            using (var db = new TodoContext())
+            using (var db = new TodoContext())  
             {
-                var list = db.Todos.ToList();
+                List<TodoMinimal> list = new List<TodoMinimal>();
+
+                var matchingTodo = db.Todos.Where(todo => todo.UserId == user.Id).ToList();
+
+                foreach(var todos in matchingTodo)
+                {
+                    TodoMinimal todo = ConvertToTodoMinimal(todos);
+                    list.Add(todo);
+                }
+
                 return list;
             }
+        }
+        private TodoMinimal ConvertToTodoMinimal(TodoDbTable todo)
+        {
+            TodoMinimal todoMinimal = new TodoMinimal();
+            todoMinimal.Id = todo.Id;
+            todoMinimal.UserId = todo.UserId;
+            todoMinimal.Descriere = todo.Descriere;
+            todoMinimal.Subiect = todo.Subiect;
+            todoMinimal.Lista = todo.Lista;
+            return todoMinimal;
         }
 
         public List<UDbTable> RGetUserList()
