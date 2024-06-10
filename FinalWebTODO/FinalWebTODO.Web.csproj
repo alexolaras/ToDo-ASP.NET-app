@@ -211,6 +211,7 @@
     <Content Include="assets\fonts2\fontawesome-webfont.svg" />
     <Content Include="assets\fonts\fontawesome-webfont.svg" />
     <Content Include="assets\images\about.jpg" />
+    <Content Include="assets\images\Alex.jpg" />
     <Content Include="assets\images\bannerbg.jpg" />
     <Content Include="assets\images\blog1.jpg" />
     <Content Include="assets\images\blog2.jpg" />
@@ -221,6 +222,7 @@
     <Content Include="assets\images\brand4.png" />
     <Content Include="assets\images\brand5.png" />
     <Content Include="assets\images\brand6.png" />
+    <Content Include="assets\images\Dorin.jpg" />
     <Content Include="assets\images\faq.jpg" />
     <Content Include="assets\images\innerbg.jpg" />
     <Content Include="assets\images\minus3.jpg" />
@@ -241,6 +243,7 @@
     <Content Include="assets\images\team2.png" />
     <Content Include="assets\images\team3.png" />
     <Content Include="assets\images\testimonials.jpg" />
+    <Content Include="assets\images\Tudorel.jpg" />
     <Content Include="assets\images\Twitter.jpg" />
     <Content Include="assets\js2\fontawesome.js" />
     <Content Include="assets\js\bootstrap.min.js" />
@@ -299,11 +302,12 @@
     <Content Include="Views\User\Create.cshtml" />
     <Content Include="Views\User\Read.cshtml" />
     <Content Include="Views\Home\TodoList.cshtml" />
-    <Content Include="Views\Home\UserList.cshtml" />
+    <Content Include="Views\Home\CreateList.cshtml" />
     <Content Include="Views\_LayoutCreaza.cshtml" />
     <Content Include="Views\Home\Contact2.cshtml" />
     <Content Include="Views\Admin\EditUserInfo.cshtml" />
     <Content Include="Views\Admin\Tables.cshtml" />
+    <Content Include="Views\Home\EditTodoInfo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

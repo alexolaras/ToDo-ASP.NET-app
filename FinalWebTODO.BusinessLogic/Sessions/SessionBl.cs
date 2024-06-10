@@ -48,5 +48,27 @@ namespace FinalWebTODO.BusinessLogic
         {
             return UserCookie(apiCookieValue);
         }
+
+
+
+        public List<TodoMinimal> GetAllTodo()
+        {
+            return RGetAllTodo();
+        }
+
+        public TodoMinimal GetTodoById(int id)
+        {
+            return RGetTodoById(id);
+        }
+
+        public void EditTodo(int id, TodoMinimal user)
+        {
+            REditTodo(id, user);
+        }
+
+        public void DeleteTodo(int id)
+        {
+            RDeleteTodo(id);
+        }
     }
 }

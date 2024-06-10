@@ -10,6 +10,7 @@ using FinalWebTODO.Domain.Entities.User;
 using AutoMapper;
 using FinalWebTODO.BusinessLogic;
 using System.Web.UI.WebControls;
+using FinalWebTODO.AdminAttribute;
 
 namespace FinalWebTODO.Controllers
 {
@@ -107,24 +108,52 @@ namespace FinalWebTODO.Controllers
             }
             return View();
         }
-        
-        
-        public ActionResult UserList()
-        {
-            var list = _session.GetUserList();
-            return View(list);
-        }
-
+   
         [HttpGet]
         public ActionResult TodoList()
         {
             var currentUser = System.Web.HttpContext.Current.GetMySessionObject();
             var todo = _session.GetTodoList(currentUser);
-
+            todo.OrderBy(m => m.Lista);
             return View(todo);
         }
+        /*
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateTodo(TodoMinimal todo)
+        {
+            if (ModelState.IsValid)
+            {
+                var currentUser = System.Web.HttpContext.Current.GetMySessionObject();
 
+                todo.Data = DateTime.Now;
+                todo.Descriere = "null";
+                todo.Subiect = "null";
 
+                var userTodo = _session.UserTodo(todo, currentUser);
+
+                if (userTodo.Status)
+                {
+                    TempData["SuccessMessage"] = "Todo Creat cu Succes";
+                    return RedirectToAction("CreazaTodo", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("", userTodo.StatusMsg);
+                    return View();
+                }
+            }
+            else
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors);
+                foreach (var error in errors)
+                {
+                    System.Diagnostics.Debug.WriteLine(error.ErrorMessage);
+                }
+            }
+            return View();
+        }
+        */
 
         public ActionResult Services()
         {
@@ -137,6 +166,53 @@ namespace FinalWebTODO.Controllers
         public ActionResult Contact2()
         {
             return View();
+        }
+
+
+        //// Asta Crudu pentru Todouri
+
+        [HttpGet]
+        [Route("Home/EditTodoInfo/{id}")]
+        public ActionResult EditTodoInfo(int id)
+        {
+            SessionStatus();
+            var userFromDB = _session.RGetTodoById(id);
+            if (userFromDB == null)
+            {
+                return View();
+            }
+            else
+            {
+                return View("EditTodoInfo", userFromDB);
+            }
+        }
+        
+        [HttpPost]
+        [Route("Home/EditTodoInfo/{id}")]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditTodoInfo(int id, TodoMinimal userModel)
+        {
+            SessionStatus();
+            if (ModelState.IsValid)
+            {
+                _session.EditTodo(id, userModel);
+                return RedirectToAction("TodoList");
+            }
+            return View("EditTodoInfo", userModel);
+        }
+
+        [HttpPost]
+        [Route("Home/DeleteTodo/{id}")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteTodo(int id)
+        {
+            SessionStatus();
+            if (ModelState.IsValid)
+            {
+                _session.DeleteTodo(id);
+                return RedirectToAction("TodoList");
+            }
+            return RedirectToAction("TodoList");
         }
     }
 }

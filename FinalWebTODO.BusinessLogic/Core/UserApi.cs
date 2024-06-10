@@ -26,7 +26,7 @@ namespace FinalWebTODO.BusinessLogic.Core
         {
             TodoDbTable result;
 
-            using( var db = new TodoContext())
+            using(var db = new TodoContext())
             {
                 result = db.Todos.FirstOrDefault(u => u.Subiect == data.Subiect && u.Descriere == data.Descriere);
             }
@@ -41,7 +41,7 @@ namespace FinalWebTODO.BusinessLogic.Core
                 Subiect = data.Subiect,
                 Descriere = data.Descriere,
             };
-            using ( var db = new TodoContext())
+            using (var db = new TodoContext())
             {
                 db.SaveChanges();
             }
@@ -51,14 +51,9 @@ namespace FinalWebTODO.BusinessLogic.Core
 
         public ULoginResp UserTodoAction(TodoMinimal todo, UserMinimal user)
         {
-            TodoDbTable resutl;
-            using( var db = new TodoContext())
+            if(todo.Lista == null)
             {
-                resutl = db.Todos.FirstOrDefault(m => m.Lista == todo.Lista);
-                if(resutl == null)
-                {
-                    todo.Lista = "null";
-                }
+                todo.Lista = "null";
             }
             var newTodo = new TodoDbTable()
             {
@@ -217,6 +212,7 @@ namespace FinalWebTODO.BusinessLogic.Core
             return todoMinimal;
         }
 
+
         public List<UDbTable> RGetUserList()
         {
             using( var db = new UserContext())
@@ -287,6 +283,67 @@ namespace FinalWebTODO.BusinessLogic.Core
             var userminimal = Mapper.Map<UserMinimal>(curentUser);
 
             return userminimal;
+        }
+
+
+
+        ///todos
+        public List<TodoMinimal> RGetAllTodo()
+        {
+            using (var db = new TodoContext())
+            {
+                return db.Todos.Select(u => new TodoMinimal
+                {
+                    Descriere = u.Descriere,
+                    Subiect = u.Subiect,
+                    Id = u.Id,
+                    Lista = u.Lista,
+                    Data = u.Data,
+                }).ToList();
+            }
+        }
+
+        public TodoMinimal RGetTodoById(int Id)
+        {
+            using (var db = new TodoContext())
+            {
+                var user = db.Todos.FirstOrDefault(us => us.Id == Id);
+                if (user == null) return null;
+                return new TodoMinimal
+                {
+                    Descriere = user.Descriere,
+                    Subiect = user.Subiect,
+                    Id = Id,
+                    Lista = user.Lista,
+                };
+            }
+        }
+
+        public void REditTodo(int Id, TodoMinimal userModel)
+        {
+            using (var dbContext = new TodoContext())
+            {
+                var user = dbContext.Todos.FirstOrDefault(us => us.Id == Id);
+                if (user == null) return;
+
+                user.Descriere = userModel.Descriere;
+                user.Subiect = userModel.Subiect;
+                user.Lista = userModel.Lista;
+
+                dbContext.SaveChanges();
+            }
+        }
+
+        public void RDeleteTodo(int id)
+        {
+            using (var dbContext = new TodoContext())
+            {
+                var user = dbContext.Todos.FirstOrDefault(u => u.Id == id);
+                if (user == null) return;
+
+                dbContext.Todos.Remove(user);
+                dbContext.SaveChanges();
+            }
         }
     }
 }

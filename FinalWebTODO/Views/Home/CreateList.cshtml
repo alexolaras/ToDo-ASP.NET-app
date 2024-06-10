@@ -1,0 +1,40 @@
+﻿@model FinalWebTODO.Models.TodoData
+@{
+    ViewBag.Title = "Creaza Todo";
+    Layout = "~/Views/_LayoutCreaza.cshtml";
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <script type="text/javascript">
+        alert('@TempData["SuccessMessage"]');
+    </script>
+}
+
+<div style="margin-top: 50px" class="todo">
+    <div class="todo-task">
+        <p style="font-size: 35px; margin: 20px 10px 25px 10px; color: rgb(212, 34, 94); font-weight: bold;">Sarcina</p>
+        <div style="margin: 0 50px 0 50px">
+            @Html.ValidationSummary(true)
+            @using (Html.BeginForm("CreazaTodo", "Home", FormMethod.Post, new { @id = "TodoForm" }))
+            {
+
+                <div style="display: flex; margin: 10px">
+                    <p class="todo-lista">Selecteaza lista:</p>
+                    @Html.TextBoxFor(m => m.Lista, new
+               {
+                   placeHolder = "Lista",
+                   name = "Lista",
+                   id = "Lista",
+                   @class = "todo-lista2"
+               })
+                    @Html.ValidationMessageFor(m => m.Lista)
+
+                </div>
+
+                <button class="btn btn-primary" type="submit">Submit</button>
+            }
+        </div>
+    </div>
+</div>
+

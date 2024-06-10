@@ -1,4 +1,5 @@
-﻿using FinalWebTODO.Domain.Enums;
+﻿using FinalWebTODO.Domain.Entities.User;
+using FinalWebTODO.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,6 @@ namespace FinalWebTODO.Models
 {
     public class TodoData
     {
-        public int UserId { get; set; }
         public string Subiect {  get; set; }
         public string Descriere { get; set; }
         public string Lista { get; set; }

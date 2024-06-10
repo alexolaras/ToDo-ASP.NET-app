@@ -20,11 +20,16 @@ namespace FinalWebTODO.BusinessLogic.Interfaces
 
         List<TodoMinimal> GetTodoList(UserMinimal user);
 
-
         List<UDbTable> GetUserList();
 
         HttpCookie GenCookie(string loginCredential);
 
         UserMinimal GetUserByCookie(string apiCookieValue);
+
+
+        List<TodoMinimal> RGetAllTodo();
+        TodoMinimal RGetTodoById(int id);
+        void EditTodo(int id, TodoMinimal user);
+        void DeleteTodo(int id);
     }
 }

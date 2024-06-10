@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "EditTodoInfo";
+    Layout = "~/Views/_LayoutCreaza.cshtml";
+}
+@model FinalWebTODO.Domain.Entities.User.TodoMinimal
+
+<div style="margin-top: 75px" class="todo">
+    <div class="todo-task">
+        <div style="margin: 0 50px 0 50px">
+            @using (Html.BeginForm("EditTodoInfo", "Home", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.ValidationSummary()
+
+                <label for="Username">Subiect</label>
+                @Html.TextBoxFor(m => m.Subiect, new
+           {
+               placeHolder = "Subiect",
+               name = "Subiect",
+               id = "Subiect",
+               @class = "todo-subiect"
+           })
+                @Html.ValidationMessageFor(m => m.Subiect)
+
+                <label for="Email">Subiect</label>
+                @Html.TextBoxFor(m => m.Descriere, new
+           {
+               placeHolder = "Descriere",
+               name = "Descriere",
+               id = "Descriere",
+               @class = "todo-subiect2",
+               style = "vertical-align: top; text-align: start; padding: 15px; box-sizing: border-box;"
+           })
+                @Html.ValidationMessageFor(m => m.Descriere)
+
+
+
+                <div style="display: flex; margin: 10px">
+                    <p class="todo-lista">Selecteaza lista:</p>
+                    @Html.TextBoxFor(m => m.Lista, new
+               {
+                   placeHolder = "Lista",
+                   name = "Lista",
+                   id = "Lista",
+                   @class = "todo-lista2"
+               })
+                    @Html.ValidationMessageFor(m => m.Lista)
+
+                </div>
+
+                <button type="submit" class="accept">Edit</button>
+                <button type="button" onclick="location.href='@Url.Action("TodoList","Home")'" class="cancel">Cancel</button>
+            }
+        </div>
+    </div>

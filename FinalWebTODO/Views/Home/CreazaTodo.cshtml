@@ -4,13 +4,17 @@
     Layout = "~/Views/_LayoutCreaza.cshtml";
 }
 
+
+
 @if (TempData["SuccessMessage"] != null)
 {
     <script type="text/javascript">
         alert('@TempData["SuccessMessage"]');
     </script>
 }
-<!--partea de sus-->
+
+
+<!--partea de sus
 <section  class="w3l-about-breadcrumb">
     <div style="height: 200px; vertical-align: top;" class="breadcrumb-bg breadcrumb-bg-about py-sm-5 pt-5 pb-4">
         <div style="height: 200px; vertical-align: top;" class="container pt-lg-5 pt-md-3 py-lg-4 pb-md-3">
@@ -18,13 +22,13 @@
             <div class="breadcrumbs-custom-path mt-2">
                 <a style="color: rgb(212, 34, 94)" href="@Url.Action("Login", "Home")">Acasă\Împreună ♡</a>
             </div>
-        </div>
+        </div>¬
     </div>
 </section>
-<!--/partea de sus-->
+partea de sus-->
 <!--Creare todo-->
 
-<div class="todo">
+<div style="margin-top: 50px" class="todo">
     <div class="todo-task">
         <p style="font-size: 35px; margin: 20px 10px 25px 10px; color: rgb(212, 34, 94); font-weight: bold;">Sarcina</p>
         <div style="margin: 0 50px 0 50px">
@@ -33,52 +37,52 @@
             {
                 @Html.AntiForgeryToken()
                 @Html.TextBoxFor(m => m.Subiect, new
-                {
-                    placeHolder = "Subiect",
-                    name = "Subiect",
-                    id = "Subiect",
-                    @class = "todo-subiect"
-                })
+           {
+               placeHolder = "Subiect",
+               name = "Subiect",
+               id = "Subiect",
+               @class = "todo-subiect"
+           })
                 @Html.ValidationMessageFor(m => m.Subiect)
 
 
                 @Html.TextBoxFor(m => m.Descriere, new
-                {
-                    placeHolder = "Descriere",
-                    name = "Descriere",
-                    id = "Descriere",
-                    @class = "todo-subiect2",
-                    style = "vertical-align: top; text-align: start; padding: 15px; box-sizing: border-box;"
-                })
+           {
+               placeHolder = "Descriere",
+               name = "Descriere",
+               id = "Descriere",
+               @class = "todo-subiect2",
+               style = "vertical-align: top; text-align: start; padding: 15px; box-sizing: border-box;"
+           })
                 @Html.ValidationMessageFor(m => m.Descriere)
 
-                <button class="btn btn-primary" type="submit">Submit</button>
+                
 
-
-
-
-            <!--<input class="todo-subiect" type="text" placeholder="Subiectul" />
-
-    <textarea class="todo-subiect2" type="text" placeholder="Descrierea" style="margin-bottom: 20px;"></textarea>
-    -->
-                <div style="display:flex; margin: 10px">
-                    <p class="todo-data">Data</p>
-                    <input class="todo-data2" type="date"
-                           name="begin"
-                           placeholder="zi-lu-anul"
-                           value=""
-                           min="now"
-                           max="future">
-                </div>
                 <div style="display: flex; margin: 10px">
                     <p class="todo-lista">Selecteaza lista:</p>
                     @Html.TextBoxFor(m => m.Lista, new
                {
                    placeHolder = "Lista",
+                   name = "Lista",
+                   id = "Lista",
                    @class = "todo-lista2"
                })
-                
+                    @Html.ValidationMessageFor(m => m.Lista)
+
                 </div>
+
+                <button class="btn btn-primary" type="submit">Submit</button>
+
+                <!--<input class="todo-subiect" type="text" placeholder="Subiectul" />
+
+        <textarea class="todo-subiect2" type="text" placeholder="Descrierea" style="margin-bottom: 20px;"></textarea>
+        -->
+        <div style="display:flex; margin: 10px">
+            <label class="todo-data" for="Date">Date:</label> <!-- Add this label -->
+            @Html.TextBoxFor(Card => Card.TodoTime, "{0:yyyy-MM-dd}", new { @type = "date", @class = "todo-data2" })
+            @Html.ValidationMessageFor(Card => Card.TodoTime, "", new { @class = "" })
+           
+        </div>
             }
         </div>
     </div>
@@ -178,6 +182,7 @@
                 ev.target.classList.toggle('checked');
             }
         }, false);
+
 
         // item nou in lista
         function newElement() {

@@ -27,6 +27,7 @@ namespace FinalWebTODO
             Mapper.Initialize(cfg => {
                 cfg.CreateMap<UDbTable, UserMinimal>();
                 cfg.CreateMap<UserLogin, ULoginDate>();
+                cfg.CreateMap<UTodoDate, TodoMinimal>();
             });
         }
     }
